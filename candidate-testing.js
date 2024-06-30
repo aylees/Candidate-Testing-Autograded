@@ -1,7 +1,6 @@
 const input = require('readline-sync');
 
 // TODO 2: modify your quiz app to ask 5 questions //
-
 // TODO 1.1a: Define candidateName // 
 let candidateName = "";
 
@@ -10,8 +9,8 @@ let question = "Who was the first American woman in space? ";
 let correctAnswer = "Sally Ride";
 let candidateAnswer = "";
 
-
 //TODO: Variables for Part 2
+
 let questions = ["Who was the first American woman in space? ", 
 "True or false: 5 kilometer == 5000 meters? ", 
 "(5 + 3)/2 * 10 = ? ", 
@@ -24,37 +23,44 @@ function askForName() {
   // TODO 1.1b: Ask for candidate's name //
 candidateName = input.question("Please enter your name here: ");
 }
-
-
 function askQuestion() {
+  
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
-for (let i = 0; i < questions.length; i++) {
+
+  for (let i = 0; i < questions.length; i++) {
   candidateAnswers.push(input.question(questions[i]));
 }
 }
-
 function gradeQuiz(candidateAnswers) {
+let numCorr = 0;
 
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
+// Lower case vs upper case - I don't know that it matters but visually I think lowercase would be better
+// if leave off i  for candidate answers all answers show up 
 for (let i = 0; i < candidateAnswers.length; i++)
 {
-  if (candidateAnswers[i] == correctAnswers[i]) {
-    console.log('Great job! Your answer is correct: ${candidateAnswers[i]}')
+  if (candidateAnswers[i].toLowerCase() === correctAnswers[i].toLowerCase()){
+    numCorr++; 
+     console.log(`Great job! Your answer is correct: ${candidateAnswers[i]}`) 
   } else {
-    console.log('Oh no! Your answer is wrong: ${candidateAnswers[i]}');
-  }
+    console.log(`Oh no! Your answer is wrong: ${candidateAnswers[i]}`);
 }
-// the template literal ${candidateAnswers[1]} is not working properly, I do need to comeback to this, but want to turn in waht I have
-  let grade;  //TODO 3.2 use this variable to calculate the candidates score.
-
-
+}
+// the template literal fixe
+  //TODO 3.2 use this variable to calculate the candidates score. //changed questions.length instead of 5 and instead of else if stmts just made it a break for 80 with a grade and it worked!
+  let grade = numCorr/(questions.length)*100;
+  if (grade >= 80) {
+  console.log(`Wow, you passed with ${numCorr} out of ${questions.length}. Your grade is ${grade}%`);
+} else { console.log (`Yikes! You did not pass with ${numCorr} out of ${questions.length}. Your grade is ${grade}%`);
+}
   return grade;
 }
-
 function runProgram() {
   askForName();
+
   // TODO 1.1c: Greet candidate using their name //
-   console.log( "Welcome," + candidateName);
+   
+  console.log( "Welcome," + candidateName);
   askQuestion();
   gradeQuiz(this.candidateAnswers);
 }
